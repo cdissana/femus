@@ -23,13 +23,6 @@ double InitalValueU(const std::vector < double >& x) {
   return x[0] + x[1];
 }
 
-double InitalValueP(const std::vector < double >& x) {
-  return x[0];
-}
-
-double InitalValueT(const std::vector < double >& x) {
-  return x[1];
-}
 
 int main(int argc, char** args) {
 
@@ -53,22 +46,17 @@ int main(int argc, char** args) {
 
   // add variables to mlSol
   mlSol.AddSolution("U", LAGRANGE, FIRST);
-  mlSol.AddSolution("V", LAGRANGE, SERENDIPITY);
-  mlSol.AddSolution("W", LAGRANGE, SECOND);
-  mlSol.AddSolution("P", DISCONTINOUS_POLYNOMIAL, ZERO);
-  mlSol.AddSolution("T", DISCONTINOUS_POLYNOMIAL, FIRST);
+  
 
   mlSol.Initialize("All");    // initialize all varaibles to zero
 
   mlSol.Initialize("U", InitalValueU);
-  mlSol.Initialize("P", InitalValueP);
-  mlSol.Initialize("T", InitalValueT);    // note that this initialization is the same as piecewise constant element
+     // note that this initialization is the same as piecewise constant element
 
   // print solutions
   std::vector < std::string > variablesToBePrinted;
   variablesToBePrinted.push_back("U");
-  variablesToBePrinted.push_back("P");
-  variablesToBePrinted.push_back("T");
+  
 
   VTKWriter vtkIO(&mlSol);
   vtkIO.write(DEFAULT_OUTPUTDIR, "biquadratic", variablesToBePrinted);
