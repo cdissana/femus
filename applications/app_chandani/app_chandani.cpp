@@ -16,6 +16,7 @@
 #include "MultiLevelProblem.hpp"
 #include "VTKWriter.hpp"
 #include "GMVWriter.hpp"
+#include "NumericVector.hpp"
 
 using namespace femus;
 
@@ -23,6 +24,17 @@ double InitalValueU(const std::vector < double >& x) {
   return x[0] + x[1];
 }
 
+bool SetBoundaryCondition(const std::vector < double >& x, const char solName[], double& value, const int faceName, const double time) {
+  bool dirichlet = true; //dirichlet
+  value = 0;
+
+  if (faceName == 2)
+    dirichlet = false;
+
+  return dirichlet;
+}
+
+void AssemblePoissonProblem(MultiLevelProblem& ml_prob);
 
 int main(int argc, char** args) {
 
